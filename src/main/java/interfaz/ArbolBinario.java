@@ -4,7 +4,7 @@ public class ArbolBinario<T> implements IArbolBinario {
     private NodoArbol<T> raiz;
 
     //region Constructor
-    public ArbolBinario(NodoArbol raiz) {
+    public ArbolBinario(NodoArbol<T> raiz) {
         this.raiz = raiz;
     }
     //endregion
