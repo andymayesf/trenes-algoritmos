@@ -10,7 +10,7 @@ public class ArbolBinario<T> implements IArbolBinario {
     //endregion
 
     public NodoArbol getRaiz() {
-        return raiz;
+        return this.raiz;
     }
 
     @Override
