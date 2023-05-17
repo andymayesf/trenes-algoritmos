@@ -3,13 +3,13 @@ package sistema;
 import interfaz.*;
 
 public class ImplementacionSistema implements Sistema {
-    ArbolBinarioBusqueda<Pasajero> Pasajeros;
+    private ArbolBinarioBusqueda<Pasajero> pasajeros;
     @Override
     public Retorno inicializarSistema(int maxEstaciones) {
         if (maxEstaciones <= 5) {
             return Retorno.error1("La cantidad maxima de estaciones debe ser mayor a 5.");
         }
-        Pasajeros = new ArbolBinarioBusqueda<>(null);
+        pasajeros = new ArbolBinarioBusqueda<Pasajero>();
 
         return Retorno.ok();
     }
@@ -25,12 +25,12 @@ public class ImplementacionSistema implements Sistema {
                     + "(CodigoNacionalidad)P.NNN.NNN#N\n"
                     + "(CodigoNacionalidad)PNN.NNN#N");
 
-        if (Pasajeros.existe(identificador))
+        if (pasajeros.existe(identificador))
             return Retorno.error3("Ya existe un pasajero con el mismo identificador al ingresado.");
 
         Pasajero nuevoPas = new Pasajero("FR1.234.567#8", "Karim Benzema", 35);
 
-        Pasajeros.insertar(nuevoPas);
+        pasajeros.insertar(nuevoPas);
 
         return Retorno.ok();
     }
