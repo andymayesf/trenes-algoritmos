@@ -1,4 +1,4 @@
-package interfaz;
+package dominio;
 
 
 public class Lista<T extends Comparable<T>> implements ILista<T> {

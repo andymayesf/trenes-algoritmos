@@ -1,4 +1,4 @@
-package interfaz;
+package dominio;
 
 public class ArbolBinario<T> implements IArbolBinario {
     private NodoArbol<T> raiz;

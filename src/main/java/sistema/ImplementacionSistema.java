@@ -1,15 +1,17 @@
 package sistema;
 
+import dominio.ABBPasajeros;
 import interfaz.*;
+import modelo.Pasajero;
 
 public class ImplementacionSistema implements Sistema {
-    private ArbolBinarioBusqueda<Pasajero> pasajeros;
+    private ABBPasajeros pasajeros;
     @Override
     public Retorno inicializarSistema(int maxEstaciones) {
         if (maxEstaciones <= 5) {
             return Retorno.error1("La cantidad maxima de estaciones debe ser mayor a 5.");
         }
-        pasajeros = new ArbolBinarioBusqueda<Pasajero>();
+        pasajeros = new ABBPasajeros();
 
         return Retorno.ok();
     }
