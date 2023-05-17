@@ -3,15 +3,36 @@ package sistema;
 import interfaz.*;
 
 public class ImplementacionSistema implements Sistema {
-
+    private ArbolBinarioBusqueda<Pasajero> pasajeros;
     @Override
     public Retorno inicializarSistema(int maxEstaciones) {
-        return Retorno.noImplementada();
+        if (maxEstaciones <= 5) {
+            return Retorno.error1("La cantidad maxima de estaciones debe ser mayor a 5.");
+        }
+        pasajeros = new ArbolBinarioBusqueda<Pasajero>();
+
+        return Retorno.ok();
     }
 
     @Override
     public Retorno registrarPasajero(String identificador, String nombre, int edad) {
-        return Retorno.noImplementada();
+        if (nombre == null || identificador == null || identificador.trim() == "" || nombre == "")
+            return Retorno.error1("Debe ingresar un identificador, nombre y edad validos.");
+
+        if (!Pasajero.idEsValido(identificador))
+            return Retorno.error2("El identificador ingresado no es valido.\n"
+                    + "El formato puede tomar los siquientes formatos: \n"
+                    + "(CodigoNacionalidad)P.NNN.NNN#N\n"
+                    + "(CodigoNacionalidad)PNN.NNN#N");
+
+        if (pasajeros.existe(identificador))
+            return Retorno.error3("Ya existe un pasajero con el mismo identificador al ingresado.");
+
+        Pasajero nuevoPas = new Pasajero("FR1.234.567#8", "Karim Benzema", 35);
+
+        pasajeros.insertar(nuevoPas);
+
+        return Retorno.ok();
     }
 
     @Override
