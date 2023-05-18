@@ -1,4 +1,6 @@
-package interfaz;
+package modelo;
+
+import java.util.Objects;
 
 public class Pasajero {
     private String id;
@@ -10,6 +12,10 @@ public class Pasajero {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
+    }
+
+    public Pasajero(String id) {
+        this.id = id;
     }
 
     public static boolean idEsValido(String identificador) {
@@ -44,4 +50,18 @@ public class Pasajero {
         this.edad = edad;
     }
     //endregion
+
+    public int extraerCIDeIdentificador(String id) {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pasajero pasajero = (Pasajero) o;
+        return extraerCIDeIdentificador(pasajero.getId()) == extraerCIDeIdentificador(this.getId());
+    }
+
+
 }

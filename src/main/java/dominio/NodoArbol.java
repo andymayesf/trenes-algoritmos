@@ -1,6 +1,6 @@
-package interfaz;
+package dominio;
 
-public class NodoArbol<T> {
+public class NodoArbol<T>{
     private T dato;
     private NodoArbol<T> izquierdo;
     private NodoArbol<T> derecho;
@@ -31,5 +31,20 @@ public class NodoArbol<T> {
     public NodoArbol<T> getDerecho() { return derecho; }
     public void setDerecho(NodoArbol<T> derecho) { this.derecho = derecho; }
     //endregion
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NodoArbol<T> nodoArbol = (NodoArbol<T>) o;
+        return dato.equals(nodoArbol.dato);
+    }
+
+
+    //@Override
+    //public int compareTo(NodoArbol<T> o) {
+      //  return o.getDato().compareTo(this.getDato());
+    //}
 
 }

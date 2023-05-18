@@ -1,4 +1,4 @@
-package interfaz;
+package dominio;
 
 public interface IArbolBinario {
     int cantNodos();
