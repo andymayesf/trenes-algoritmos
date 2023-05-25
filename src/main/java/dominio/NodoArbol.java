@@ -1,19 +1,21 @@
 package dominio;
 
-public class NodoArbol<T>{
-    private T dato;
-    private NodoArbol<T> izquierdo;
-    private NodoArbol<T> derecho;
+import modelo.Pasajero;
+
+public class NodoArbol{
+    private Pasajero dato;
+    private NodoArbol izquierdo;
+    private NodoArbol derecho;
 
     //region Constructores
 
-    public NodoArbol(T dato) {
+    public NodoArbol(Pasajero dato) {
         this.dato = dato;
         this.izquierdo = null;
         this.derecho = null;
     }
 
-    public NodoArbol(T dato, NodoArbol izquierdo, NodoArbol derecho) {
+    public NodoArbol(Pasajero dato, NodoArbol izquierdo, NodoArbol derecho) {
         this.dato = dato;
         this.izquierdo = izquierdo;
         this.derecho = derecho;
@@ -22,14 +24,14 @@ public class NodoArbol<T>{
     //endregion
 
     //region Getters y setters
-    public T getDato() { return dato; }
-    public void setDato(T dato) { this.dato = dato; }
+    public Pasajero getDato() { return dato; }
+    public void setDato(Pasajero dato) { this.dato = dato; }
 
-    public NodoArbol<T> getIzquierdo() { return izquierdo; }
-    public void setIzquierdo(NodoArbol<T> izquierdo) { this.izquierdo = izquierdo; }
+    public NodoArbol getIzquierdo() { return izquierdo; }
+    public void setIzquierdo(NodoArbol izquierdo) { this.izquierdo = izquierdo; }
 
-    public NodoArbol<T> getDerecho() { return derecho; }
-    public void setDerecho(NodoArbol<T> derecho) { this.derecho = derecho; }
+    public NodoArbol getDerecho() { return derecho; }
+    public void setDerecho(NodoArbol derecho) { this.derecho = derecho; }
     //endregion
 
 
@@ -37,7 +39,7 @@ public class NodoArbol<T>{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NodoArbol<T> nodoArbol = (NodoArbol<T>) o;
+        NodoArbol nodoArbol = (NodoArbol) o;
         return dato.equals(nodoArbol.dato);
     }
 

@@ -1,11 +1,13 @@
 package modelo;
 
-import java.util.Objects;
+import interfaz.Nacionalidad;
 
 public class Pasajero {
     private String id;
     private String nombre;
     private int edad;
+
+    static String regexId = "(^(FR|DE|UK|ES|OT)[1-9]\\.(\\d{3})\\.(\\d{3})#(\\d)$)|(^(FR|DE|UK|ES|OT)[1-9](\\d{2})\\.(\\d{3})#(\\d)$)";
 
     //region Constructor
     public Pasajero(String id, String nombre, int edad) {
@@ -18,10 +20,14 @@ public class Pasajero {
         this.id = id;
     }
 
+    public boolean Validar(){
+        return idEsValido(this.getId());
+    }
+
     public static boolean idEsValido(String identificador) {
         // TODO: Validar id con regex
         //  (^(FR|DE|UK|ES|OT)[1-9]\.(\d{3})\.(\d{3})#(\d)$)|(^(FR|DE|UK|ES|OT)[1-9](\d{2})\.(\d{3})#(\d)$)
-        return true;
+        return identificador.matches(regexId);
     }
     //endregion
 
@@ -51,8 +57,21 @@ public class Pasajero {
     }
     //endregion
 
-    public int extraerCIDeIdentificador(String id) {
-        return 0;
+    public int getIdNum() {
+        String id = this.getId();
+        int i = 0;
+        String numero = "";
+        while (id.charAt(i) != '#'){
+            if(Character.isDigit(id.charAt(i))){
+                numero += id.charAt(i);
+            }
+            i++;
+        }
+        return Integer.parseInt(numero);
+    }
+
+    public String getNacionalidad(){
+        return "";
     }
 
     @Override
@@ -60,8 +79,12 @@ public class Pasajero {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pasajero pasajero = (Pasajero) o;
-        return extraerCIDeIdentificador(pasajero.getId()) == extraerCIDeIdentificador(this.getId());
+        return pasajero.getIdNum() == getIdNum();
     }
 
-
+    @Override
+    public String toString() {
+        //TODO: poner nacionalidad
+        return getId()+";"+getNombre()+";"+getEdad();
+    }
 }

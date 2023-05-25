@@ -1,5 +1,9 @@
 package interfaz;
 
+import modelo.Estacion;
+import modelo.Pasajero;
+import sistema.ImplementacionSistema;
+
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -86,6 +90,10 @@ public class Consulta {
             return valorString;
         }
 
+        public Nacionalidad getValorNacionalidad() {
+            return valorNacionalidad;
+        }
+
         public NodoConsulta getIzq() {
             return izq;
         }
@@ -157,8 +165,43 @@ public class Consulta {
 
 
     public static void main(String[] args) {
-        //Vamos subiendo la complejidad
-        System.out.println(Consulta.fromString("edad > 10 OR nacionalidad = 'OT'"));
+        Pasajero p = new Pasajero("DE234.233#2", "Andy", 23);
+        int num = p.getIdNum();
+
+        System.out.println(num);
+        System.out.println(p.Validar());
+        System.out.println();
+
+        // registrar pasajero
+        System.out.println("REGISTRAR PASAJERO");
+        ImplementacionSistema s = new ImplementacionSistema();
+        System.out.println(s.inicializarSistema(6));
+        System.out.println(s.registrarPasajero("DE5.234.234#2", "Nico", 26));
+        System.out.println(s.registrarPasajero("DE3.234.383#2", "Flor", 23));
+        System.out.println(s.registrarPasajero("DE2.234.237#2", "Sabri", 43));
+        System.out.println(s.registrarPasajero("DE4.234.233#2", "Andy", 23));
+        System.out.println(s.registrarPasajero("DE8.234.235#2", "Juan", 29));
+        System.out.println(s.registrarPasajero("DE9.234.233#2", "Ger", 27));
+        System.out.println(s.registrarPasajero("DE7.234.236#2", "Gonza", 20));
+        System.out.println(s.registrarPasajero("DE6.234.338#2", "Sofia", 21));
+        System.out.println(s.registrarPasajero("DE1.234.237#2", "Nacho", 33));
+
+
+
+        System.out.println(s.listarPasajerosAscendente());
+        System.out.println(s.listarPasajerosDescendente());
+
+        System.out.println(s.buscarPasajero("DE1.234.237#2"));
+
+        System.out.println("Estacion ABC123");
+        Estacion e = new Estacion("ABF820", "munich");
+        System.out.println(e.Validar());
+
+
+
+
+
+        /*System.out.println(Consulta.fromString("edad > 10 OR nacionalidad = 'OT'"));
 
         System.out.println(Consulta.fromString("[edad >10] AND [nacionalidad ='DE' AND nacionalidad='ES']"));
         System.out.println(Consulta.fromString("[[[[[edad>10]]]] AND [nombre='pepe']]"));
@@ -170,7 +213,8 @@ public class Consulta {
         System.out.println(Consulta.fromString("[[edad>10] AND nombre='pepe'"));
         System.out.println(Consulta.fromString("invalida][]"));
         System.out.println(Consulta.fromString("'pepe'=nombre AND [10>edad] "));
-        System.out.println(Consulta.fromString("[edad>10] nombre='sofia'"));
+        System.out.println(Consulta.fromString("[edad>10] nombre='sofia'")); */
+
     }
 
     // Metodo publico que llama al recursivo
