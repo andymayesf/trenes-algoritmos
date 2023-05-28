@@ -1,6 +1,6 @@
 package dominio;
 
-import interfaz.Consulta;
+import modelo.Conexion;
 import modelo.Estacion;
 
 public class GrafoEstaciones implements IGrafo {
@@ -48,10 +48,7 @@ public class GrafoEstaciones implements IGrafo {
 
     }
 
-    @Override
-    public boolean sonAdyacentes(String a, String b) {
-        return false;
-    }
+
 
     @Override
     public ILista verticesAdyacentes(String v) {
@@ -80,6 +77,61 @@ public class GrafoEstaciones implements IGrafo {
 
         ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
         return conexiones.existe(nueva);
+    }
+
+    @Override
+    public void actualizarConexion(Conexion actualizada) {
+        int posOrigen = obtenerPos(actualizada.getOrigen());
+        int posDestino = obtenerPos(actualizada.getDestino());
+
+        ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
+        Conexion vieja = conexiones.recuperar(actualizada);
+        vieja.actualizar(actualizada);
+    }
+
+    @Override
+    public boolean sonAdyacentes(Estacion origen, Estacion destino) {
+        int obtenerPosOrigen = obtenerPos(origen);
+        int obtenerPosDestino = obtenerPos(destino);
+
+        if (obtenerPosOrigen >= 0 && obtenerPosDestino >= 0) {
+            return !matrizConexiones[obtenerPosOrigen][obtenerPosDestino].esVacia();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void listarDestinosPorTrasbordos(Estacion estacion, int cantidad) {
+        Lista<Estacion> aux = verticesAdyacentes(estacion);
+
+        listarDestinosPorTrasbordos(aux, cantidad - 1);
+    }
+
+    private void listarDestinosPorTrasbordos(Lista<Estacion> estaciones, int cantidad) {
+        if(cantidad > 0) {
+            // Foreach estacion : estaciones
+                // print estacion
+                // aux = verticesAdyacentes(estacion);
+                // listarDestinosPorTrasbordos(estaciones)
+        } else {
+            return;
+        }
+    }
+
+    public Lista<Estacion> verticesAdyacentes(Estacion estacion) {
+        Lista<Estacion> estacionesAdy = new Lista();
+        int obtenerPosOrigen = obtenerPos(estacion);
+
+        if (obtenerPosOrigen >= 0) {
+            for (int i = 0; i < maxEstaciones; i++) {
+                if (sonAdyacentes(estacion, estaciones[i])) {
+                    estacionesAdy.insertar(estaciones[i]);
+                }
+            }
+        }
+
+        return estacionesAdy;
     }
 
     private int obtenerPos(Estacion e) {

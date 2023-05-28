@@ -1,7 +1,6 @@
-package dominio;
+package modelo;
 
 import interfaz.EstadoCamino;
-import modelo.Estacion;
 
 public class Conexion implements Comparable {
     private Estacion origen;
@@ -41,5 +40,12 @@ public class Conexion implements Comparable {
         if (o == null || getClass() != o.getClass()) return false;
         Conexion conexion = (Conexion) o;
         return id == conexion.id;
+    }
+
+    public void actualizar(Conexion actualizada) {
+        this.costo = actualizada.costo;
+        this.tiempo = actualizada.tiempo;
+        this.distancia = actualizada.distancia;
+        this.estado = actualizada.estado;
     }
 }

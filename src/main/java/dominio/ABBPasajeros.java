@@ -1,6 +1,7 @@
 package dominio;
 
 import interfaz.Consulta;
+import interfaz.Nacionalidad;
 import interfaz.Retorno;
 import modelo.Pasajero;
 
@@ -137,6 +138,25 @@ public class ABBPasajeros {
                 break;
         }
         return false;
+    }
+
+    public void listarPorNacionalidad(Nacionalidad nacionalidad) {
+        System.out.println(listarPorNacionalidad(this.raiz, nacionalidad));
+    }
+
+
+    private String listarPorNacionalidad(NodoArbol nodo, Nacionalidad nacionalidad) {
+        if (nodo != null) {
+            String lista = "";
+
+            if (nodo.getDato().getNacionalidad().equals(nacionalidad))
+                lista = nodo.getDato().toString();
+
+            return listarPorNacionalidad(nodo.getIzquierdo(), nacionalidad) + "|\n" + lista + "|\n" + listarPorNacionalidad(nodo.getDerecho(), nacionalidad);
+        }
+
+        return "";
+
     }
     //endregion
 

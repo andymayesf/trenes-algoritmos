@@ -1,7 +1,6 @@
 package dominio;
 
-
-public class Lista<T extends Comparable<T>> implements ILista<T> {
+public class Lista<T> implements ILista<T> {
     protected NodoLista<T> inicio;
     protected int largo;
 

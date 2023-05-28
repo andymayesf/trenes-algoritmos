@@ -1,7 +1,7 @@
 package sistema;
 
 import dominio.ABBPasajeros;
-import dominio.Conexion;
+import modelo.Conexion;
 import dominio.GrafoEstaciones;
 import interfaz.*;
 import modelo.Estacion;
@@ -81,7 +81,12 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarPasajerosPorNacionalidad(Nacionalidad nacionalidad) {
-        return Retorno.noImplementada();
+        if (nacionalidad == null)
+            return Retorno.error1("La nacionalidad debe ser distinta de nula.");
+
+        pasajeros.listarPorNacionalidad(nacionalidad);
+
+        return Retorno.ok();
     }
 
     @Override
@@ -122,7 +127,7 @@ public class ImplementacionSistema implements Sistema {
         if(!grafoEstaciones.existeEstacion(destino))
             return Retorno.error5("No existe la estacion de destino ingresada");
 
-        Conexion nueva = new Conexion(origen, destino, identificadorConexion, costo, tiempo, kilometros, estadoDeLaConexion)
+        Conexion nueva = new Conexion(origen, destino, identificadorConexion, costo, tiempo, kilometros, estadoDeLaConexion);
 
         if(grafoEstaciones.existeConexion(nueva))
             return Retorno.error6("Ya existe una conexion con el identificador ingresado");
@@ -135,13 +140,56 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno actualizarCamino(String codigoEstacionOrigen, String codigoEstacionDestino,
                                     int identificadorConexion, double costo, double tiempo,
-                                    double kilometros, EstadoCamino estadoDelCamino) {
-        return Retorno.noImplementada();
+                                    double kilometros, EstadoCamino estadoDeLaConexion) {
+
+        if (costo <= 0 || tiempo <= 0 || kilometros <= 0 || identificadorConexion <= 0)
+            return Retorno.error1("El costo, tiempo, distancia e identificador deben ser mayores a 0");
+
+        if(codigoEstacionOrigen == null || codigoEstacionDestino == null
+                || codigoEstacionOrigen == "" || codigoEstacionDestino == "" || estadoDeLaConexion == null)
+            return Retorno.error2("Ni las estaciones de origen y destino ni el estado de la conexion pueden ser vacios o nulos");
+
+        Estacion origen = new Estacion(codigoEstacionOrigen);
+        Estacion destino = new Estacion(codigoEstacionDestino);
+
+        if (!origen.Validar() || !destino.Validar())
+            return Retorno.error3("Los codigos origen y/o destino no son validos");
+
+        if(!grafoEstaciones.existeEstacion(origen))
+            return Retorno.error4("No existe la estacion de origen ingresada");
+
+        if(!grafoEstaciones.existeEstacion(destino))
+            return Retorno.error5("No existe la estacion de destino ingresada");
+
+        Conexion actualizada = new Conexion(origen, destino, identificadorConexion, costo, tiempo, kilometros, estadoDeLaConexion);
+
+        if(!grafoEstaciones.existeConexion(actualizada))
+            return Retorno.error6("No existe una conexion con el identificador ingresado");
+
+        grafoEstaciones.actualizarConexion(actualizada);
+
+        return Retorno.ok();
     }
 
     @Override
     public Retorno listadoEstacionesCantTrasbordos(String codigo, int cantidad) {
-        return Retorno.noImplementada();
+        if (cantidad < 0)
+            return Retorno.error1("La cantidad de trasbordos debe ser mayor a 0.");
+
+        if (codigo == null)
+            return Retorno.error2("El codigo debe ser distinto de nulo.");
+
+        Estacion nueva = new Estacion(codigo);
+
+        if(!nueva.Validar())
+            return Retorno.error3("El codigo de la estacion no es valido.");
+
+        if(!grafoEstaciones.existeEstacion(nueva))
+            return Retorno.error4("La estacion no esta ingresada en el sistema");
+
+        grafoEstaciones.listarDestinosPorTrasbordos(nueva, cantidad);
+
+        return Retorno.ok();
     }
 
     @Override

@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Objects;
 
-public class Estacion {
+public class Estacion implements Comparable {
     private String codigo;
     private String nombre;
     static String regexCodigo = "[A-Z]{3}\\d{3}$";
@@ -38,5 +38,11 @@ public class Estacion {
         Estacion estacion = (Estacion) o;
         return Objects.equals(codigo, estacion.codigo);
     }
+
+    @Override
+    public int compareTo(Object o) {
+            return -1;
+    }
+
 
 }
