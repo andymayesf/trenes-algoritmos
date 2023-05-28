@@ -1,12 +1,18 @@
 package modelo;
 
+import java.util.Objects;
+
 public class Estacion {
     private String codigo;
     private String nombre;
     static String regexCodigo = "[A-Z]{3}\\d{3}$";
-    public Estacion(String c, String n){
-        this.codigo = c;
-        this.nombre = n;
+    public Estacion(String codigo, String nombre){
+        this.codigo = codigo;
+        this.nombre = nombre;
+    }
+
+    public Estacion(String codigo){
+        this.codigo = codigo;
     }
 
     public String getCodigo(){
@@ -24,4 +30,13 @@ public class Estacion {
     private boolean validarCodigo(){
         return getCodigo().matches(regexCodigo);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Estacion estacion = (Estacion) o;
+        return Objects.equals(codigo, estacion.codigo);
+    }
+
 }

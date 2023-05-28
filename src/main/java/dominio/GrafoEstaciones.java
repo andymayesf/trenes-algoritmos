@@ -30,8 +30,12 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public void agregarArista(String origen, String destino, int costo, int distancia) {
+    public void agregarConexion(Conexion nueva) {
+        int posOrigen = obtenerPos(nueva.getOrigen());
+        int posDestino = obtenerPos(nueva.getDestino());
 
+        ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
+        conexiones.insertar(nueva);
     }
 
     @Override
@@ -67,6 +71,15 @@ public class GrafoEstaciones implements IGrafo {
     @Override
     public void dijkstra(String vert) {
 
+    }
+
+    @Override
+    public boolean existeConexion(Conexion nueva) {
+        int posOrigen = obtenerPos(nueva.getOrigen());
+        int posDestino = obtenerPos(nueva.getDestino());
+
+        ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
+        return conexiones.existe(nueva);
     }
 
     private int obtenerPos(Estacion e) {

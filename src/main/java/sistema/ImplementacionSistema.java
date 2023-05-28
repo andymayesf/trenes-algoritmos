@@ -1,6 +1,7 @@
 package sistema;
 
 import dominio.ABBPasajeros;
+import dominio.Conexion;
 import dominio.GrafoEstaciones;
 import interfaz.*;
 import modelo.Estacion;
@@ -103,9 +104,32 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarConexion(String codigoEstacionOrigen, String codigoEstacionDestino,
                                      int identificadorConexion, double costo, double tiempo, double kilometros,
                                      EstadoCamino estadoDeLaConexion) {
+        if (costo <= 0 || tiempo <= 0 || kilometros <= 0)
+            return Retorno.error1("El costo, tiempo y distancia deben ser mayores a 0");
+        if(codigoEstacionOrigen == null || codigoEstacionDestino == null
+                || codigoEstacionOrigen == "" || codigoEstacionDestino == "" || estadoDeLaConexion == null)
+            return Retorno.error2("Ni las estaciones de origen y destino ni el estado de la conexion pueden ser vacios o nulos");
 
+        Estacion origen = new Estacion(codigoEstacionOrigen);
+        Estacion destino = new Estacion(codigoEstacionDestino);
 
-        return Retorno.noImplementada();
+        if (!origen.Validar() || !destino.Validar())
+            return Retorno.error3("Los codigos origen y/o destino no son validos");
+
+        if(!grafoEstaciones.existeEstacion(origen))
+            return Retorno.error4("No existe la estacion de origen ingresada");
+
+        if(!grafoEstaciones.existeEstacion(destino))
+            return Retorno.error5("No existe la estacion de destino ingresada");
+
+        Conexion nueva = new Conexion(origen, destino, identificadorConexion, costo, tiempo, kilometros, estadoDeLaConexion)
+
+        if(grafoEstaciones.existeConexion(nueva))
+            return Retorno.error6("Ya existe una conexion con el identificador ingresado");
+
+        grafoEstaciones.agregarConexion(nueva);
+
+        return Retorno.ok();
     }
 
     @Override
