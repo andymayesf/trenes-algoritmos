@@ -169,14 +169,14 @@ public class Consulta {
         int num = p.getIdNum();
 
         System.out.println(num);
-        System.out.println(p.Validar());
+        System.out.println(p.getNacionalidadCod());
         System.out.println();
 
         // registrar pasajero
         System.out.println("REGISTRAR PASAJERO");
         ImplementacionSistema s = new ImplementacionSistema();
         System.out.println(s.inicializarSistema(6));
-        System.out.println(s.registrarPasajero("DE5.234.234#2", "Nico", 26));
+        System.out.println(s.registrarPasajero("OT5.234.234#2", "Nico", 26));
         System.out.println(s.registrarPasajero("DE3.234.383#2", "Flor", 23));
         System.out.println(s.registrarPasajero("DE2.234.237#2", "Sabri", 43));
         System.out.println(s.registrarPasajero("DE4.234.233#2", "Andy", 23));

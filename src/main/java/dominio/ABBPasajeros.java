@@ -23,9 +23,15 @@ public class ABBPasajeros {
         if(nodo.getDato().equals(p))
             return true;
         else {
-            // TODO: if(nodo.compareTo())
-            if(p.getIdNum() < nodo.getDato().getIdNum())
+            // compara primero por nacionalidad
+            // si tiene la misma nacionalidad compara el numero
+            if(p.getNacionalidad().equals(nodo.getDato().getNacionalidad())) {
+                if(p.getIdNum() < nodo.getDato().getIdNum())
+                    return existe(p, nodo.getIzquierdo());
+                return existe(p, nodo.getDerecho());
+            } else if(p.getNacionalidad().getIndice() < nodo.getDato().getNacionalidad().getIndice()){
                 return existe(p, nodo.getIzquierdo());
+            }
             return existe(p, nodo.getDerecho());
         }
     }
@@ -43,15 +49,33 @@ public class ABBPasajeros {
     }
 
     private void insertar(Pasajero p, NodoArbol nodo){
-        if(p.getIdNum() < nodo.getDato().getIdNum())
+        if(p.getNacionalidad().equals(nodo.getDato().getNacionalidad())) {
+            if (p.getIdNum() < nodo.getDato().getIdNum())
+                if (nodo.getIzquierdo() == null) {
+                    nodo.setIzquierdo(new NodoArbol(p));
+                    return;
+                } else {
+                    insertar(p, nodo.getIzquierdo());
+                }
+            if(p.getIdNum() > nodo.getDato().getIdNum()){
+                if (nodo.getDerecho() == null) {
+                    nodo.setDerecho(new NodoArbol(p));
+                    return;
+                } else {
+                    insertar(p, nodo.getDerecho());
+                }
+            }
+        } else if(p.getNacionalidad().getIndice() < nodo.getDato().getNacionalidad().getIndice()){
             if (nodo.getIzquierdo() == null) {
                 nodo.setIzquierdo(new NodoArbol(p));
+                return;
             } else {
                 insertar(p, nodo.getIzquierdo());
             }
-        if(p.getIdNum() > nodo.getDato().getIdNum()){
+        } else {
             if (nodo.getDerecho() == null) {
                 nodo.setDerecho(new NodoArbol(p));
+                return;
             } else {
                 insertar(p, nodo.getDerecho());
             }
