@@ -1,10 +1,10 @@
 package dominio;
 
-public class ArbolBinario<T> implements IArbolBinario {
-    private NodoArbol<T> raiz;
+public class ArbolBinario implements IArbolBinario {
+    private NodoArbol raiz;
 
     //region Constructor
-    public ArbolBinario(NodoArbol<T> raiz) {
+    public ArbolBinario(NodoArbol raiz) {
         this.raiz = raiz;
     }
     //endregion
