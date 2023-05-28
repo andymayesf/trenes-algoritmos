@@ -70,10 +70,14 @@ public class Pasajero {
         return Integer.parseInt(numero);
     }
 
-    public String getNacionalidad(){
-        return "";
+    public String getNacionalidadCod(){
+        String id = this.getId();
+        return id.substring(0,2);
     }
 
+    public Nacionalidad getNacionalidad(){
+        return Nacionalidad.fromCodigo(this.getNacionalidadCod());
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,7 +88,6 @@ public class Pasajero {
 
     @Override
     public String toString() {
-        //TODO: poner nacionalidad
-        return getId()+";"+getNombre()+";"+getEdad();
+        return getId()+";"+getNombre()+";"+getEdad()+getNacionalidadCod();
     }
 }
