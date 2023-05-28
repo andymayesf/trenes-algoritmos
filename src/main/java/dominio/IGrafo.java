@@ -1,5 +1,6 @@
 package dominio;
 
+import interfaz.Retorno;
 import modelo.Conexion;
 import modelo.Estacion;
 
@@ -22,5 +23,5 @@ public interface IGrafo {
 
     void actualizarConexion(Conexion actualizada);
 
-    void listarDestinosPorTrasbordos(Estacion nueva, int cantidad);
+    Retorno listarDestinosPorTrasbordos(Estacion nueva, int cantidad);
 }

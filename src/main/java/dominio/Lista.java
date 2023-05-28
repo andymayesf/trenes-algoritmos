@@ -1,6 +1,6 @@
 package dominio;
 
-public class Lista<T> implements ILista<T> {
+public class Lista<T extends Comparable> implements ILista<T> {
     protected NodoLista<T> inicio;
     protected int largo;
 
@@ -13,6 +13,20 @@ public class Lista<T> implements ILista<T> {
     public void insertar(T dato) {
         inicio = new NodoLista<T>(dato, inicio);
         largo++;
+    }
+
+    @Override
+    public void insertarOrdenado(T dato){
+        if (esVacia() || dato.compareTo(inicio.getDato()) < 0){
+            insertar(dato);
+        } else {
+            NodoLista<T> aux = inicio;
+            while (aux.getSig() != null && dato.compareTo(aux.getSig().getDato()) > 0) {
+                aux = aux.getSig();
+            }
+            aux.setSig(new NodoLista<T>(dato,aux.getSig()));
+            largo++;
+        }
     }
 
     @Override
@@ -60,17 +74,18 @@ public class Lista<T> implements ILista<T> {
     }
 
     @Override
-    public void imprimirDatos() {
+    public String imprimirDatos() {
+        String retorno = "";
         NodoLista<T> aux = inicio;
         while (aux != null) {
             if (aux.getSig() != null){
-                System.out.print(aux.getDato().toString() + " -> ");
+                retorno +=aux.getDato().toString() + " | ";
             }else{
-                System.out.print(aux.getDato().toString());
+                retorno += aux.getDato().toString();
             }
             aux = aux.getSig();
         }
-        System.out.println();
+        return retorno;
     }
 
     public void imprimirDatosV2(NodoLista<T> nodo ) {
@@ -81,7 +96,7 @@ public class Lista<T> implements ILista<T> {
     }
 
 
-    class NodoLista<T>{
+    public class NodoLista<T extends Comparable>{
         private T dato;
         private NodoLista<T> sig;
 
