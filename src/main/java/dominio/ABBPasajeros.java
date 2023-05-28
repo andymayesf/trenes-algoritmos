@@ -1,5 +1,6 @@
 package dominio;
 
+import interfaz.Consulta;
 import interfaz.Retorno;
 import modelo.Pasajero;
 
@@ -93,6 +94,49 @@ public class ABBPasajeros {
                 return buscar(p, nodo.getIzquierdo(), cuenta + 1);
             return buscar(p, nodo.getDerecho(), cuenta + 1);
         }
+    }
+
+    public Retorno filtrarPasajerosPor(Consulta consulta) {
+        String resString = filtrarPasajerosRec(this.raiz, consulta);
+        return Retorno.ok(resString);
+    }
+
+    private String filtrarPasajerosRec(NodoArbol nodo, Consulta consulta){
+        if(nodo == null){
+            return "";
+        }
+        String pasajero = "";
+        if(consultarPasajero(nodo.getDato(), consulta)) {
+            pasajero += "|\n"+ nodo.getDato().toString();
+        }
+        return filtrarPasajerosRec(nodo.getIzquierdo(), consulta) + pasajero + filtrarPasajerosRec(nodo.getDerecho(), consulta);
+
+    };
+
+    private boolean consultarPasajero(Pasajero p, Consulta c){
+        return consultarPasajeroRec(p, c.getRaiz());
+    };
+    private boolean consultarPasajeroRec(Pasajero pasajero, Consulta.NodoConsulta nodoConsulta) {
+        Consulta.TipoNodoConsulta tnc = nodoConsulta.getTipoNodoConsulta();
+
+        switch(tnc) {
+            case And:
+                return consultarPasajeroRec(pasajero, nodoConsulta.getIzq())
+                        && consultarPasajeroRec(pasajero, nodoConsulta.getDer());
+            case Or:
+                return consultarPasajeroRec(pasajero, nodoConsulta.getIzq()) || consultarPasajeroRec(pasajero, nodoConsulta.getDer());
+            case EdadMayor:
+                return pasajero.getEdad() > nodoConsulta.getValorInt();
+
+            case NombreIgual:
+                return pasajero.getNombre().equals(nodoConsulta.getValorString());
+
+            case Nacionalidad:
+                return pasajero.getNacionalidad().equals(nodoConsulta.getValorNacionalidad());
+            default:
+                break;
+        }
+        return false;
     }
     //endregion
 

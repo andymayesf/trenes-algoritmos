@@ -48,10 +48,12 @@ public class ImplementacionSistema implements Sistema {
     //3
     @Override
     public Retorno filtrarPasajeros(Consulta consulta) {
-        return Retorno.noImplementada();
+        if(consulta == null)
+            return Retorno.error1("Consulta es vacia");
+        return pasajeros.filtrarPasajerosPor(consulta);
     }
 
-    //3
+    //4
     @Override
     public Retorno buscarPasajero(String identificador) {
         if(identificador == null)
@@ -62,14 +64,14 @@ public class ImplementacionSistema implements Sistema {
         return pasajeros.buscar(p);
     }
 
-    //4
+    //5
     @Override
     public Retorno listarPasajerosAscendente() {
         pasajeros.listarAscendente();
         return Retorno.ok();
     }
 
-    //5
+    //6
     @Override
     public Retorno listarPasajerosDescendente() {
         pasajeros.listarDescendente();

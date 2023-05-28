@@ -197,9 +197,9 @@ public class Consulta {
         Estacion e = new Estacion("ABF820", "munich");
         System.out.println(e.Validar());
 
+        Consulta c = Consulta.fromString("[edad >10] AND [nacionalidad ='DE']");
 
-
-
+        System.out.println(s.filtrarPasajeros(c));
 
         /*System.out.println(Consulta.fromString("edad > 10 OR nacionalidad = 'OT'"));
 
