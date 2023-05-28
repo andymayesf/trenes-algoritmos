@@ -85,7 +85,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarEstacionDeTren(String codigo, String nombre) {
-        if(grafoEstaciones.estaLleno())
+        if(grafoEstaciones.estaLlena())
             return Retorno.error1("Ya hay registadas el maximo de estaciones");
         if(codigo == "" || codigo == null  || nombre == "" || nombre == null)
             return Retorno.error2("Datos vacios o nulos");
@@ -103,6 +103,8 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarConexion(String codigoEstacionOrigen, String codigoEstacionDestino,
                                      int identificadorConexion, double costo, double tiempo, double kilometros,
                                      EstadoCamino estadoDeLaConexion) {
+
+
         return Retorno.noImplementada();
     }
 
