@@ -1,6 +1,8 @@
 package sistema;
 
 import dominio.ABBPasajeros;
+import dominio.ILista;
+import dominio.Lista;
 import modelo.Conexion;
 import dominio.GrafoEstaciones;
 import interfaz.*;
@@ -10,6 +12,11 @@ import modelo.Pasajero;
 public class ImplementacionSistema implements Sistema {
     private ABBPasajeros pasajeros;
     private GrafoEstaciones grafoEstaciones;
+    private ILista<Pasajero> francia;
+    private ILista<Pasajero> alemania;
+    private ILista<Pasajero> reinoUnido;
+    private ILista<Pasajero> espania;
+    private ILista<Pasajero> otro;
 
     public ImplementacionSistema(){}
     //1
@@ -19,6 +26,12 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error1("La cantidad maxima de estaciones debe ser mayor a 5.");
         }
         pasajeros = new ABBPasajeros();
+        francia = new Lista();
+        alemania = new Lista();
+        reinoUnido = new Lista();
+        espania = new Lista();
+        otro = new Lista();
+
         grafoEstaciones = new GrafoEstaciones(maxEsta);
 
         return Retorno.ok();
@@ -42,6 +55,23 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error3("Ya existe un pasajero con el mismo identificador al ingresado.");
 
         pasajeros.insertar(nuevoPas);
+        switch (nuevoPas.getNacionalidad()) {
+            case Francia -> {
+                francia.insertar(nuevoPas);
+            }
+            case Alemania -> {
+                alemania.insertar(nuevoPas);
+            }
+            case ReinoUnido -> {
+                reinoUnido.insertar(nuevoPas);
+            }
+            case Espania -> {
+                espania.insertar(nuevoPas);
+            }
+            case Otro -> {
+                otro.insertar(nuevoPas);
+            }
+        }
 
         return Retorno.ok();
     }
@@ -68,15 +98,13 @@ public class ImplementacionSistema implements Sistema {
     //5
     @Override
     public Retorno listarPasajerosAscendente() {
-        pasajeros.listarAscendente();
-        return Retorno.ok();
+        return Retorno.ok(pasajeros.listarAscendente());
     }
 
     //6
     @Override
     public Retorno listarPasajerosDescendente() {
-        pasajeros.listarDescendente();
-        return Retorno.ok();
+        return Retorno.ok(pasajeros.listarDescendente());
     }
 
     @Override
@@ -84,9 +112,25 @@ public class ImplementacionSistema implements Sistema {
         if (nacionalidad == null)
             return Retorno.error1("La nacionalidad debe ser distinta de nula.");
 
-        pasajeros.listarPorNacionalidad(nacionalidad);
-
-        return Retorno.ok();
+        String ret = "";
+        switch (nacionalidad) {
+            case Francia -> {
+                ret = francia.imprimirDatos();
+            }
+            case Alemania -> {
+                ret = alemania.imprimirDatos();
+            }
+            case ReinoUnido -> {
+                ret = reinoUnido.imprimirDatos();
+            }
+            case Espania -> {
+                ret = espania.imprimirDatos();
+            }
+            case Otro -> {
+                ret = otro.imprimirDatos();
+            }
+        }
+        return Retorno.ok(ret);
     }
 
     @Override
@@ -109,7 +153,7 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarConexion(String codigoEstacionOrigen, String codigoEstacionDestino,
                                      int identificadorConexion, double costo, double tiempo, double kilometros,
                                      EstadoCamino estadoDeLaConexion) {
-        if (costo <= 0 || tiempo <= 0 || kilometros <= 0)
+        if (costo <= 0 || tiempo <= 0 || kilometros <= 0 || identificadorConexion <=0)
             return Retorno.error1("El costo, tiempo y distancia deben ser mayores a 0");
         if(codigoEstacionOrigen == null || codigoEstacionDestino == null
                 || codigoEstacionOrigen == "" || codigoEstacionDestino == "" || estadoDeLaConexion == null)
@@ -192,7 +236,20 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno viajeCostoMinimoKilometros(String codigoEstacionOrigen, String codigoEstacionDestino) {
-        return Retorno.noImplementada();
+        if(codigoEstacionOrigen == null || codigoEstacionOrigen == "" ||
+                codigoEstacionDestino==""|| codigoEstacionDestino == null)
+            return Retorno.error1("Los codigos no puedes ser vacios ni nulos");
+        Estacion origen = new Estacion(codigoEstacionOrigen);
+        Estacion destino = new Estacion(codigoEstacionDestino);
+        if(!origen.Validar() || !destino.Validar())
+            return Retorno.error2("Codigo no valido");
+        if(!grafoEstaciones.existeEstacion(origen))
+            return Retorno.error4("La estacion de origen no existe");
+        if(!grafoEstaciones.existeEstacion(destino))
+            return Retorno.error5("No existe estacion destino");
+        //TODO: verificar que existe un camino entre origen y destino
+        // error3
+        return grafoEstaciones.caminoMinKm(origen, destino);
     }
 
     @Override

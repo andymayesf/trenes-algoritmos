@@ -15,13 +15,24 @@ public class GrafoEstaciones implements IGrafo {
         this.maxEstaciones = maxEstaciones;
         this.matrizConexiones = new ILista[maxEstaciones][maxEstaciones];
         this.estaciones = new Estacion[maxEstaciones];
+        inicializarMatriz();
+    }
+
+    private void inicializarMatriz(){
+        for (int i = 0; i < maxEstaciones; i++) {
+            for (int j = 0; j < maxEstaciones; j++) {
+                matrizConexiones[i][j] = new Lista<Conexion>();
+            }
+        }
     }
     @Override
     public void agregarEstacion(Estacion e) {
-        this.cantEstaciones++;
-        int index = this.obtenerPosLibre();
-        if (index >= 0) {
-            estaciones[index] = e;
+        if(!estaLlena()){
+            int index = this.obtenerPosLibre();
+            if (index >= 0) {
+                this.cantEstaciones++;
+                estaciones[index] = e;
+            }
         }
     }
     @Override
@@ -68,8 +79,67 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public void dijkstra(String vert) {
+    public void dijkstra(Estacion origen, Estacion destino, String tipo) {
+        boolean[] visitados = new boolean[maxEstaciones];
+        double[] costos = new double[maxEstaciones];
+        Estacion[] vengo = new Estacion[maxEstaciones];
 
+        int pos = obtenerPos(origen);
+
+        for (int i = 0; i < maxEstaciones; i++) {
+            costos[i] = Integer.MAX_VALUE; //Seria nuestro infinito
+        }
+
+        costos[pos] = 0;
+
+        for (int v = 0; v < maxEstaciones; v++) {
+            //TODO obtenerSig
+            int posV = obtenerSiguienteEstacionNoVisitadaDeMenorDistancia(costos, visitados);
+
+            visitados[posV] = true;
+
+            for (int i = 0; i < maxEstaciones; i++) {
+                if (!matrizConexiones[posV][i].esVacia() && !visitados[i]) {
+                    double distanciaNueva = costos[posV] + matrizConexiones[posV][i].getMenorDato(tipo);
+                    if (costos[i] > distanciaNueva) {
+                        costos[i] = distanciaNueva;
+                        vengo[i] = estaciones[posV];
+                    }
+                }
+            }
+        }
+
+        String camino = "";
+        int posDestino = obtenerPos(destino);
+        camino = estaciones[posDestino] + " " + camino;
+
+        int posDestinoAux = obtenerPos(destino);
+        Estacion eAnt = vengo[posDestinoAux];
+        camino = eAnt + " " + camino;
+
+        while(eAnt!=null){
+            posDestinoAux = obtenerPos(eAnt);
+            eAnt = vengo[posDestinoAux];
+            if(eAnt!=null){
+                camino = eAnt + " " + camino;
+            }
+        }
+
+    //    System.out.println("El camino del vertice " + origen.toString() + " al vertice B es: " + camino);
+    //    System.out.println("El costo del camino entre A y B es: " + costos[posDestino] );
+    }
+    //TODO: rever metodo
+    private int obtenerSiguienteEstacionNoVisitadaDeMenorDistancia(double[] distancias, boolean[] visitados) {
+        int posMin = -1;
+        double min = Integer.MAX_VALUE; // Infinito
+
+        for (int i = 0; i < maxEstaciones; i++) {
+            if (!visitados[i] && distancias[i] < min) {
+                min = distancias[i];
+                posMin = i;
+            }
+        }
+        return posMin;
     }
 
     @Override
@@ -110,6 +180,13 @@ public class GrafoEstaciones implements IGrafo {
         listarDestinosPorTrasbordos(retorno, aux, cantidad);
         return Retorno.ok(retorno.imprimirDatos());
     }
+
+    @Override
+    public Retorno caminoMinKm(Estacion origen, Estacion destino) {
+        return null;
+    }
+
+
 
     private void listarDestinosPorTrasbordos(Lista<Estacion> retorno, Lista<Estacion> estaciones, int cantidad) {
         if(cantidad > 0) {
@@ -153,5 +230,6 @@ public class GrafoEstaciones implements IGrafo {
         }
         return -1;
     }
+
 
 }

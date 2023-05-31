@@ -2,7 +2,7 @@ package modelo;
 
 import interfaz.Nacionalidad;
 
-public class Pasajero {
+public class Pasajero implements Comparable {
     private String id;
     private String nombre;
     private int edad;
@@ -88,6 +88,14 @@ public class Pasajero {
 
     @Override
     public String toString() {
-        return getId()+";"+getNombre()+";"+getEdad()+getNacionalidadCod();
+        return getId()+";"+getNombre()+";"+getEdad()+";"+getNacionalidadCod();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Pasajero p = (Pasajero) o;
+        if(getIdNum() == p.getIdNum()) return 0;
+        if(getIdNum() > p.getIdNum()) return 1;
+        return -1;
     }
 }
