@@ -10,4 +10,6 @@ public interface ILista<T> {
     boolean esVacia();
     boolean esLlena();
     String imprimirDatos();
+
+    double getMenorDato(String tipo);
 }

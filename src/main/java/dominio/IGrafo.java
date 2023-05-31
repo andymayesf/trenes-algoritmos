@@ -17,11 +17,14 @@ public interface IGrafo {
     ILista verticesAdyacentes(String v);
     boolean esVacio();
     boolean estaLlena();
-    void dijkstra(String vert);
 
     boolean existeConexion(Conexion nueva);
 
     void actualizarConexion(Conexion actualizada);
 
     Retorno listarDestinosPorTrasbordos(Estacion nueva, int cantidad);
+
+    Retorno caminoMinKm(Estacion origen, Estacion destino);
+
+    void dijkstra(Estacion origen, Estacion destino, String tipo);
 }

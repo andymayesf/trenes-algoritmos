@@ -59,8 +59,8 @@ public class ABBPasajeros {
             }
         }
     }
-    public void listarDescendente() {
-        System.out.println(listarDescendente(this.raiz));
+    public String listarDescendente() {
+        return listarDescendente(this.raiz);
     }
 
     private String listarDescendente(NodoArbol nodo) {
@@ -69,8 +69,8 @@ public class ABBPasajeros {
         else
             return "";
     }
-    public void listarAscendente() {
-        System.out.println(listarAscendente(this.raiz));
+    public String listarAscendente() {
+        return listarAscendente(this.raiz);
     }
 
     private String listarAscendente(NodoArbol nodo) {
@@ -156,7 +156,6 @@ public class ABBPasajeros {
         }
 
         return "";
-
     }
     //endregion
 

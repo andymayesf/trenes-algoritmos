@@ -20,6 +20,7 @@ public class Conexion implements Comparable {
         this.distancia = distancia;
         this.estado = estado;
     }
+    public Conexion(){}
 
     public Estacion getOrigen() {
         return origen;
@@ -28,6 +29,10 @@ public class Conexion implements Comparable {
     public Estacion getDestino() {
         return destino;
     }
+
+    public double getDistancia(){ return this.distancia; }
+
+    public double getCosto(){ return this.costo; }
 
     @Override
     public int compareTo(Object o) {
