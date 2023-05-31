@@ -153,7 +153,7 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarConexion(String codigoEstacionOrigen, String codigoEstacionDestino,
                                      int identificadorConexion, double costo, double tiempo, double kilometros,
                                      EstadoCamino estadoDeLaConexion) {
-        if (costo <= 0 || tiempo <= 0 || kilometros <= 0)
+        if (costo <= 0 || tiempo <= 0 || kilometros <= 0 || identificadorConexion <=0)
             return Retorno.error1("El costo, tiempo y distancia deben ser mayores a 0");
         if(codigoEstacionOrigen == null || codigoEstacionDestino == null
                 || codigoEstacionOrigen == "" || codigoEstacionDestino == "" || estadoDeLaConexion == null)

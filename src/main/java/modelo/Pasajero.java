@@ -88,7 +88,7 @@ public class Pasajero implements Comparable {
 
     @Override
     public String toString() {
-        return getId()+";"+getNombre()+";"+getEdad()+getNacionalidadCod();
+        return getId()+";"+getNombre()+";"+getEdad()+";"+getNacionalidadCod();
     }
 
     @Override

@@ -27,10 +27,12 @@ public class GrafoEstaciones implements IGrafo {
     }
     @Override
     public void agregarEstacion(Estacion e) {
-        this.cantEstaciones++;
-        int index = this.obtenerPosLibre();
-        if (index >= 0) {
-            estaciones[index] = e;
+        if(!estaLlena()){
+            int index = this.obtenerPosLibre();
+            if (index >= 0) {
+                this.cantEstaciones++;
+                estaciones[index] = e;
+            }
         }
     }
     @Override

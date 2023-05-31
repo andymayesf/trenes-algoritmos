@@ -81,7 +81,7 @@ public class Lista<T extends Comparable> implements ILista<T> {
         NodoLista<T> aux = inicio;
         while (aux != null) {
             if (aux.getSig() != null){
-                retorno +=aux.getDato().toString() + " | ";
+                retorno +=aux.getDato().toString() + "|";
             }else{
                 retorno += aux.getDato().toString();
             }
