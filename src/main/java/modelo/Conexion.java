@@ -34,6 +34,8 @@ public class Conexion implements Comparable {
 
     public double getCosto(){ return this.costo; }
 
+    public EstadoCamino getEstado(){return this.estado;}
+
     @Override
     public int compareTo(Object o) {
         return 0;
@@ -45,6 +47,15 @@ public class Conexion implements Comparable {
         if (o == null || getClass() != o.getClass()) return false;
         Conexion conexion = (Conexion) o;
         return id == conexion.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Conexion{" +
+                "id=" + id +
+                ", costo=" + costo +
+                ", distancia=" + distancia +
+                '}';
     }
 
     public void actualizar(Conexion actualizada) {

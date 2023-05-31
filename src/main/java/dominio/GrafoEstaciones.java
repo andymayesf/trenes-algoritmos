@@ -5,6 +5,8 @@ import modelo.Conexion;
 import modelo.Estacion;
 import dominio.Lista.NodoLista;
 
+import java.sql.SQLOutput;
+
 public class GrafoEstaciones implements IGrafo {
     private Estacion[] estaciones;
     private int maxEstaciones;
@@ -47,8 +49,7 @@ public class GrafoEstaciones implements IGrafo {
         int posOrigen = obtenerPos(nueva.getOrigen());
         int posDestino = obtenerPos(nueva.getDestino());
 
-        ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
-        conexiones.insertar(nueva);
+        matrizConexiones[posOrigen][posDestino].insertar(nueva);
     }
 
     @Override
@@ -79,7 +80,7 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public void dijkstra(Estacion origen, Estacion destino, String tipo) {
+    public Retorno dijkstra(Estacion origen, Estacion destino, String tipo) {
         boolean[] visitados = new boolean[maxEstaciones];
         double[] costos = new double[maxEstaciones];
         Estacion[] vengo = new Estacion[maxEstaciones];
@@ -93,40 +94,51 @@ public class GrafoEstaciones implements IGrafo {
         costos[pos] = 0;
 
         for (int v = 0; v < maxEstaciones; v++) {
-            //TODO obtenerSig
             int posV = obtenerSiguienteEstacionNoVisitadaDeMenorDistancia(costos, visitados);
 
-            visitados[posV] = true;
-
-            for (int i = 0; i < maxEstaciones; i++) {
-                if (!matrizConexiones[posV][i].esVacia() && !visitados[i]) {
-                    double distanciaNueva = costos[posV] + matrizConexiones[posV][i].getMenorDato(tipo);
-                    if (costos[i] > distanciaNueva) {
-                        costos[i] = distanciaNueva;
-                        vengo[i] = estaciones[posV];
+            if(posV > -1){
+                visitados[posV] = true;
+                for (int i = 0; i < maxEstaciones; i++) {
+                    if (!matrizConexiones[posV][i].esVacia() && !visitados[i]) {
+                        System.out.println(matrizConexiones[posV][i].imprimirDatos());
+                        double distanciaNueva = costos[posV] + matrizConexiones[posV][i].getMenorDato(tipo);
+                        System.out.println(distanciaNueva);
+                        if (costos[i] > distanciaNueva) {
+                            costos[i] = distanciaNueva;
+                            vengo[i] = estaciones[posV];
+                        }
                     }
                 }
             }
+
+        }
+
+        int posDestino = obtenerPos(destino);
+
+        if(costos[posDestino] == Integer.MAX_VALUE){
+            return Retorno.error3("No existe el camino");
         }
 
         String camino = "";
-        int posDestino = obtenerPos(destino);
-        camino = estaciones[posDestino] + " " + camino;
+        camino = estaciones[posDestino].toString() + "|" + camino;
 
         int posDestinoAux = obtenerPos(destino);
         Estacion eAnt = vengo[posDestinoAux];
-        camino = eAnt + " " + camino;
+        camino = eAnt.toString() + "|" + camino;
 
         while(eAnt!=null){
             posDestinoAux = obtenerPos(eAnt);
             eAnt = vengo[posDestinoAux];
             if(eAnt!=null){
-                camino = eAnt + " " + camino;
+                camino = eAnt.toString() + "|" + camino;
             }
         }
-
-    //    System.out.println("El camino del vertice " + origen.toString() + " al vertice B es: " + camino);
-    //    System.out.println("El costo del camino entre A y B es: " + costos[posDestino] );
+        if(camino.length() > 0){
+            camino = camino.substring(0, camino.length()-1);
+        }
+        if(costos[posDestino] > 0)
+            return Retorno.ok((int) costos[posDestino],camino);
+        return  Retorno.error3("No hay caminos posibles");
     }
     //TODO: rever metodo
     private int obtenerSiguienteEstacionNoVisitadaDeMenorDistancia(double[] distancias, boolean[] visitados) {
@@ -156,8 +168,7 @@ public class GrafoEstaciones implements IGrafo {
         int posOrigen = obtenerPos(actualizada.getOrigen());
         int posDestino = obtenerPos(actualizada.getDestino());
 
-        ILista<Conexion> conexiones = matrizConexiones[posOrigen][posDestino];
-        Conexion vieja = conexiones.recuperar(actualizada);
+        Conexion vieja = matrizConexiones[posOrigen][posDestino].recuperar(actualizada);
         vieja.actualizar(actualizada);
     }
 
@@ -183,9 +194,12 @@ public class GrafoEstaciones implements IGrafo {
 
     @Override
     public Retorno caminoMinKm(Estacion origen, Estacion destino) {
-        return null;
+        return dijkstra(origen, destino, "distancia");
     }
-
+    @Override
+    public Retorno caminoMinEuros(Estacion origen, Estacion destino) {
+        return dijkstra(origen, destino, "costo");
+    }
 
 
     private void listarDestinosPorTrasbordos(Lista<Estacion> retorno, Lista<Estacion> estaciones, int cantidad) {

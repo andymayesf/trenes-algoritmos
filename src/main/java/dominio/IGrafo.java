@@ -25,6 +25,7 @@ public interface IGrafo {
     Retorno listarDestinosPorTrasbordos(Estacion nueva, int cantidad);
 
     Retorno caminoMinKm(Estacion origen, Estacion destino);
+    Retorno caminoMinEuros(Estacion origen, Estacion destino);
 
-    void dijkstra(Estacion origen, Estacion destino, String tipo);
+    Retorno dijkstra(Estacion origen, Estacion destino, String tipo);
 }

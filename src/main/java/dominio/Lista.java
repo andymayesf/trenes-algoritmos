@@ -1,5 +1,6 @@
 package dominio;
 
+import interfaz.EstadoCamino;
 import modelo.Conexion;
 
 public class Lista<T extends Comparable> implements ILista<T> {
@@ -99,11 +100,13 @@ public class Lista<T extends Comparable> implements ILista<T> {
             NodoLista aux = inicio;
             while (aux != null) {
                 Conexion auxConexion = (Conexion) aux.getDato();
-                if(tipo == "distancia"){
-                    if(auxConexion.getDistancia() < ret) ret = auxConexion.getDistancia();
-                }
-                if(tipo == "costo"){
-                    if(auxConexion.getCosto() < ret) ret = auxConexion.getCosto();
+                if(auxConexion.getEstado() != EstadoCamino.MALO){
+                    if(tipo == "distancia"){
+                        if(auxConexion.getDistancia() < ret) ret = auxConexion.getDistancia();
+                    }
+                    if(tipo == "costo"){
+                        if(auxConexion.getCosto() < ret) ret = auxConexion.getCosto();
+                    }
                 }
                 aux = aux.getSig();
             }

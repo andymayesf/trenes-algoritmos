@@ -1,6 +1,7 @@
 package interfaz;
 
 import dominio.Lista;
+import modelo.Conexion;
 import modelo.Estacion;
 import modelo.Pasajero;
 import sistema.ImplementacionSistema;
@@ -165,6 +166,8 @@ public class Consulta {
      */
 
 
+
+
     public static void main(String[] args) {
         Pasajero p = new Pasajero("DE234.233#2", "Andy", 23);
         int num = p.getIdNum();
@@ -188,7 +191,6 @@ public class Consulta {
         System.out.println(s.registrarPasajero("DE1.234.237#2", "Nacho", 33));
 
 
-
         System.out.println(s.listarPasajerosAscendente());
         System.out.println(s.listarPasajerosDescendente());
 
@@ -201,6 +203,23 @@ public class Consulta {
         Consulta c = Consulta.fromString("[edad >10] AND [nacionalidad ='DE']");
 
         System.out.println(s.filtrarPasajeros(c));
+
+        //DJSKTRA
+
+        s.registrarEstacionDeTren("AAA111", "Est1");
+        s.registrarEstacionDeTren("AAA112", "Est2");
+        s.registrarEstacionDeTren("AAA113", "Est3");
+        s.registrarEstacionDeTren("AAA114", "Est4");
+        s.registrarEstacionDeTren("AAA115", "Est5");
+        s.registrarEstacionDeTren("AAA116", "Est6");
+        s.registrarConexion("AAA111", "AAA112", 12, 10, 10, 10, EstadoCamino.BUENO);
+        s.registrarConexion("AAA111", "AAA113", 13, 10, 10, 10, EstadoCamino.BUENO);
+        s.registrarConexion("AAA113", "AAA114", 34, 10, 10, 10, EstadoCamino.BUENO);
+        s.registrarConexion("AAA114", "AAA115", 45, 10, 10, 10, EstadoCamino.BUENO);
+        s.registrarConexion("AAA112", "AAA115", 25, 10, 10, 10, EstadoCamino.BUENO);
+        s.registrarConexion("AAA112", "AAA115", 251, 1, 10, 1, EstadoCamino.BUENO);
+
+        System.out.println(s.viajeCostoMinimoKilometros("AAA111", "AAA115"));
 
         /*System.out.println(Consulta.fromString("edad > 10 OR nacionalidad = 'OT'"));
 
@@ -221,7 +240,7 @@ public class Consulta {
         listaInt.insertarOrdenado(3);
         listaInt.insertarOrdenado(2);
         listaInt.insertarOrdenado(4);
-        System.out.println(listaInt.imprimirDatos());
+        //System.out.println(listaInt.imprimirDatos());
 
     }
 
