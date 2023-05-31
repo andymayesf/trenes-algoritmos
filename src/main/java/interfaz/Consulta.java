@@ -1,5 +1,6 @@
 package interfaz;
 
+import dominio.Lista;
 import modelo.Estacion;
 import modelo.Pasajero;
 import sistema.ImplementacionSistema;
@@ -214,6 +215,13 @@ public class Consulta {
         System.out.println(Consulta.fromString("invalida][]"));
         System.out.println(Consulta.fromString("'pepe'=nombre AND [10>edad] "));
         System.out.println(Consulta.fromString("[edad>10] nombre='sofia'")); */
+        Lista<Integer> listaInt = new Lista<Integer>();
+        listaInt.insertarOrdenado(5);
+        listaInt.insertarOrdenado(1);
+        listaInt.insertarOrdenado(3);
+        listaInt.insertarOrdenado(2);
+        listaInt.insertarOrdenado(4);
+        System.out.println(listaInt.imprimirDatos());
 
     }
 

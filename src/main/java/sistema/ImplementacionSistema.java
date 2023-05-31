@@ -187,9 +187,7 @@ public class ImplementacionSistema implements Sistema {
         if(!grafoEstaciones.existeEstacion(nueva))
             return Retorno.error4("La estacion no esta ingresada en el sistema");
 
-        grafoEstaciones.listarDestinosPorTrasbordos(nueva, cantidad);
-
-        return Retorno.ok();
+        return grafoEstaciones.listarDestinosPorTrasbordos(nueva, cantidad);
     }
 
     @Override
@@ -201,5 +199,6 @@ public class ImplementacionSistema implements Sistema {
     public Retorno viajeCostoMinimoEuros(String codigoEstacionOrigen, String codigoEstacionDestino) {
         return null;
     }
+
 
 }

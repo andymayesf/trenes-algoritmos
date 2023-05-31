@@ -1,7 +1,9 @@
 package dominio;
 
+import interfaz.Retorno;
 import modelo.Conexion;
 import modelo.Estacion;
+import dominio.Lista.NodoLista;
 
 public class GrafoEstaciones implements IGrafo {
     private Estacion[] estaciones;
@@ -102,20 +104,21 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public void listarDestinosPorTrasbordos(Estacion estacion, int cantidad) {
+    public Retorno listarDestinosPorTrasbordos(Estacion estacion, int cantidad) {
         Lista<Estacion> aux = verticesAdyacentes(estacion);
-
-        listarDestinosPorTrasbordos(aux, cantidad - 1);
+        Lista<Estacion> retorno = new Lista<Estacion>();
+        listarDestinosPorTrasbordos(retorno, aux, cantidad);
+        return Retorno.ok(retorno.imprimirDatos());
     }
 
-    private void listarDestinosPorTrasbordos(Lista<Estacion> estaciones, int cantidad) {
+    private void listarDestinosPorTrasbordos(Lista<Estacion> retorno, Lista<Estacion> estaciones, int cantidad) {
         if(cantidad > 0) {
-            // Foreach estacion : estaciones
-                // print estacion
-                // aux = verticesAdyacentes(estacion);
-                // listarDestinosPorTrasbordos(estaciones)
-        } else {
-            return;
+            NodoLista aux = estaciones.inicio;
+            for(int i = 0; i < estaciones.largo; i++ ){
+                retorno.insertarOrdenado((Estacion)aux.getDato());
+                listarDestinosPorTrasbordos(retorno, verticesAdyacentes((Estacion)aux.getDato()), cantidad -1);
+                aux = aux.getSig();
+            }
         }
     }
 
