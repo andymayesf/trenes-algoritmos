@@ -220,8 +220,7 @@ public class ImplementacionSistema implements Sistema {
         if (cantidad < 0)
             return Retorno.error1("La cantidad de trasbordos debe ser mayor a 0.");
 
-        if (codigo == null)
-            return Retorno.error2("El codigo debe ser distinto de nulo.");
+        if (codigo == null || codigo == "") return Retorno.error2("El codigo debe ser distinto de nulo.");
 
         Estacion nueva = new Estacion(codigo);
 
