@@ -41,7 +41,12 @@ public class Estacion implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-            return -1;
+
+        if(o.getClass() == this.getClass()) {
+            Estacion e = (Estacion) o;
+            return this.codigo.compareTo(e.codigo);
+        }
+        return -1;
     }
 
     @Override

@@ -220,28 +220,7 @@ public class Consulta {
         s.registrarConexion("AAA112", "AAA115", 251, 1, 10, 1, EstadoCamino.BUENO);
 
         System.out.println(s.viajeCostoMinimoKilometros("AAA111", "AAA115"));
-
-        /*System.out.println(Consulta.fromString("edad > 10 OR nacionalidad = 'OT'"));
-
-        System.out.println(Consulta.fromString("[edad >10] AND [nacionalidad ='DE' AND nacionalidad='ES']"));
-        System.out.println(Consulta.fromString("[[[[[edad>10]]]] AND [nombre='pepe']]"));
-        System.out.println(Consulta.fromString("'pepe'=nombre"));
-        System.out.println(Consulta.fromString("[[edad>12 AND nacionalidad='ES' AND nombre='Roberto'] OR " +
-                "[edad>   14 AND     ['Raul'    =     nombre OR nombre= 'clotilda']]]"));
-
-        //Estas son claramente invalidas
-        System.out.println(Consulta.fromString("[[edad>10] AND nombre='pepe'"));
-        System.out.println(Consulta.fromString("invalida][]"));
-        System.out.println(Consulta.fromString("'pepe'=nombre AND [10>edad] "));
-        System.out.println(Consulta.fromString("[edad>10] nombre='sofia'")); */
-        Lista<Integer> listaInt = new Lista<Integer>();
-        listaInt.insertarOrdenado(5);
-        listaInt.insertarOrdenado(1);
-        listaInt.insertarOrdenado(3);
-        listaInt.insertarOrdenado(2);
-        listaInt.insertarOrdenado(4);
-        //System.out.println(listaInt.imprimirDatos());
-
+        s.listadoEstacionesCantTrasbordos("AAA111", 1);
     }
 
     // Metodo publico que llama al recursivo
