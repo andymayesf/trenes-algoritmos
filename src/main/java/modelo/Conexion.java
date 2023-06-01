@@ -20,7 +20,6 @@ public class Conexion implements Comparable {
         this.distancia = distancia;
         this.estado = estado;
     }
-    public Conexion(){}
 
     public Estacion getOrigen() {
         return origen;
@@ -47,15 +46,6 @@ public class Conexion implements Comparable {
         if (o == null || getClass() != o.getClass()) return false;
         Conexion conexion = (Conexion) o;
         return id == conexion.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Conexion{" +
-                "id=" + id +
-                ", costo=" + costo +
-                ", distancia=" + distancia +
-                '}';
     }
 
     public void actualizar(Conexion actualizada) {

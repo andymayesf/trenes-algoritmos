@@ -32,20 +32,6 @@ public class Lista<T extends Comparable> implements ILista<T> {
         }
     }
 
-    @Override
-    public T borrar() {
-        T aux = null;
-        if (inicio != null) {
-            aux = inicio.getDato();
-            inicio = inicio.getSig();
-        }
-        return aux;
-    }
-
-    @Override
-    public int largo() {
-        return largo;
-    }
 
     @Override
     public boolean existe(T dato) {
@@ -77,11 +63,6 @@ public class Lista<T extends Comparable> implements ILista<T> {
     }
 
     @Override
-    public boolean esLlena() {
-        return false;
-    }
-
-    @Override
     public String imprimirDatos() {
         String retorno = "";
         NodoLista<T> aux = inicio;
@@ -96,13 +77,6 @@ public class Lista<T extends Comparable> implements ILista<T> {
         return retorno;
     }
 
-
-    public void imprimirDatosV2(NodoLista<T> nodo ) {
-        if (nodo!=null){
-            System.out.println(nodo.getDato().toString());
-            imprimirDatosV2(nodo.getSig());
-        }
-    }
 
 
     public class NodoLista<T extends Comparable>{

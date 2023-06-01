@@ -53,16 +53,6 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public ILista verticesAdyacentes(String v) {
-        return null;
-    }
-
-    @Override
-    public boolean esVacio() {
-        return false;
-    }
-
-    @Override
     public boolean estaLlena() {
         return maxEstaciones == cantEstaciones;
     }
@@ -88,9 +78,7 @@ public class GrafoEstaciones implements IGrafo {
                 visitados[posV] = true;
                 for (int i = 0; i < maxEstaciones; i++) {
                     if (!matrizConexiones[posV][i].esVacia() && !visitados[i]) {
-                        System.out.println(matrizConexiones[posV][i].imprimirDatos());
                         double distanciaNueva = costos[posV] + matrizConexiones[posV][i].getMenorDato(tipo);
-                        System.out.println(distanciaNueva);
                         if (costos[i] > distanciaNueva) {
                             costos[i] = distanciaNueva;
                             vengo[i] = estaciones[posV];
@@ -161,18 +149,6 @@ public class GrafoEstaciones implements IGrafo {
     }
 
     @Override
-    public boolean sonAdyacentes(Estacion origen, Estacion destino) {
-        int obtenerPosOrigen = obtenerPos(origen);
-        int obtenerPosDestino = obtenerPos(destino);
-
-        if (obtenerPosOrigen >= 0 && obtenerPosDestino >= 0) {
-            return !matrizConexiones[obtenerPosOrigen][obtenerPosDestino].esVacia();
-        } else {
-            return false;
-        }
-    }
-
-    @Override
     public Retorno listarDestinosPorTrasbordos(Estacion estacion, int distancia) {
         String ret = listarDestinosPorTrasbordosBfs(estacion, distancia);
         return Retorno.ok(ret);
@@ -189,22 +165,18 @@ public class GrafoEstaciones implements IGrafo {
 
         Lista<Estacion> retEstaciones = new Lista<>();
 
-        while (!cola.esVacia() && distancia >= 0) {
+        while (!cola.esVacia()) {
             Tupla tuplaDesencolada = cola.desencolar();
-
             retEstaciones.insertarOrdenado(estaciones[tuplaDesencolada.pos]);
-
-            for (int i = 0; i < maxEstaciones; i++) {
-                if (!this.matrizConexiones[tuplaDesencolada.pos][i].esVacia() && !visitados[i]) {
-                    cola.encolar(new Tupla(i, tuplaDesencolada.salto + 1));
-                    visitados[i] = true;
+            if(tuplaDesencolada.salto < distancia){
+                for (int i = 0; i < maxEstaciones; i++  ) {
+                    if (!this.matrizConexiones[tuplaDesencolada.pos][i].esVacia() && !visitados[i]) {
+                        cola.encolar(new Tupla(i, tuplaDesencolada.salto + 1));
+                        visitados[i] = true;
+                    }
                 }
             }
-
-            distancia--;
         }
-
-        System.out.println(ret);
         return retEstaciones.imprimirDatos();
     }
     @Override
@@ -215,22 +187,6 @@ public class GrafoEstaciones implements IGrafo {
     @Override
     public Retorno caminoMinEuros(Estacion origen, Estacion destino) {
         return dijkstra(origen, destino, "costo");
-    }
-
-
-    public Lista<Estacion> verticesAdyacentes(Estacion estacion) {
-        Lista<Estacion> estacionesAdy = new Lista();
-        int obtenerPosOrigen = obtenerPos(estacion);
-
-        if (obtenerPosOrigen >= 0) {
-            for (int i = 0; i < maxEstaciones; i++) {
-                if (sonAdyacentes(estacion, estaciones[i])) {
-                    estacionesAdy.insertar(estaciones[i]);
-                }
-            }
-        }
-
-        return estacionesAdy;
     }
 
     private int obtenerPos(Estacion e) {

@@ -8,8 +8,6 @@ import modelo.Pasajero;
 public class ABBPasajeros {
     private NodoArbol raiz;
 
-    //region Constructor
-
 
     public ABBPasajeros() {
 
@@ -25,7 +23,6 @@ public class ABBPasajeros {
         if(nodo.getDato().equals(p))
             return true;
         else {
-            // TODO: if(nodo.compareTo())
             if(p.getIdNum() < nodo.getDato().getIdNum())
                 return existe(p, nodo.getIzquierdo());
             return existe(p, nodo.getDerecho());
@@ -148,24 +145,4 @@ public class ABBPasajeros {
         }
         return false;
     }
-
-    public void listarPorNacionalidad(Nacionalidad nacionalidad) {
-        System.out.println(listarPorNacionalidad(this.raiz, nacionalidad));
-    }
-
-
-    private String listarPorNacionalidad(NodoArbol nodo, Nacionalidad nacionalidad) {
-        if (nodo != null) {
-            String lista = "";
-
-            if (nodo.getDato().getNacionalidad().equals(nacionalidad))
-                lista = nodo.getDato().toString();
-
-            return listarPorNacionalidad(nodo.getIzquierdo(), nacionalidad) + "|\n" + lista + "|\n" + listarPorNacionalidad(nodo.getDerecho(), nacionalidad);
-        }
-
-        return "";
-    }
-    //endregion
-
 }
