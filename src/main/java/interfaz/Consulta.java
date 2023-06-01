@@ -166,63 +166,6 @@ public class Consulta {
      */
 
 
-
-
-    public static void main(String[] args) {
-        Pasajero p = new Pasajero("DE234.233#2", "Andy", 23);
-        int num = p.getIdNum();
-
-        System.out.println(num);
-        System.out.println(p.Validar());
-        System.out.println();
-
-        // registrar pasajero
-        System.out.println("REGISTRAR PASAJERO");
-        ImplementacionSistema s = new ImplementacionSistema();
-        System.out.println(s.inicializarSistema(6));
-        System.out.println(s.registrarPasajero("DE5.234.234#2", "Nico", 26));
-        System.out.println(s.registrarPasajero("DE3.234.383#2", "Flor", 23));
-        System.out.println(s.registrarPasajero("DE2.234.237#2", "Sabri", 43));
-        System.out.println(s.registrarPasajero("DE4.234.233#2", "Andy", 23));
-        System.out.println(s.registrarPasajero("DE8.234.235#2", "Juan", 29));
-        System.out.println(s.registrarPasajero("DE9.234.233#2", "Ger", 27));
-        System.out.println(s.registrarPasajero("DE7.234.236#2", "Gonza", 20));
-        System.out.println(s.registrarPasajero("DE6.234.338#2", "Sofia", 21));
-        System.out.println(s.registrarPasajero("DE1.234.237#2", "Nacho", 33));
-
-
-        System.out.println(s.listarPasajerosAscendente());
-        System.out.println(s.listarPasajerosDescendente());
-
-        System.out.println(s.buscarPasajero("DE1.234.237#2"));
-
-        System.out.println("Estacion ABC123");
-        Estacion e = new Estacion("ABF820", "munich");
-        System.out.println(e.Validar());
-
-        Consulta c = Consulta.fromString("[edad >10] AND [nacionalidad ='DE']");
-
-        System.out.println(s.filtrarPasajeros(c));
-
-        //DJSKTRA
-
-        s.registrarEstacionDeTren("AAA111", "Est1");
-        s.registrarEstacionDeTren("AAA112", "Est2");
-        s.registrarEstacionDeTren("AAA113", "Est3");
-        s.registrarEstacionDeTren("AAA114", "Est4");
-        s.registrarEstacionDeTren("AAA115", "Est5");
-        s.registrarEstacionDeTren("AAA116", "Est6");
-        s.registrarConexion("AAA111", "AAA112", 12, 10, 10, 10, EstadoCamino.BUENO);
-        s.registrarConexion("AAA111", "AAA113", 13, 10, 10, 10, EstadoCamino.BUENO);
-        s.registrarConexion("AAA113", "AAA114", 34, 10, 10, 10, EstadoCamino.BUENO);
-        s.registrarConexion("AAA114", "AAA115", 45, 10, 10, 10, EstadoCamino.BUENO);
-        s.registrarConexion("AAA112", "AAA115", 25, 10, 10, 10, EstadoCamino.BUENO);
-        s.registrarConexion("AAA112", "AAA115", 251, 1, 10, 1, EstadoCamino.BUENO);
-
-        System.out.println(s.viajeCostoMinimoKilometros("AAA111", "AAA115"));
-        s.listadoEstacionesCantTrasbordos("AAA111", 1);
-    }
-
     // Metodo publico que llama al recursivo
     public static Consulta fromString(String consulta) {
         ResultadoParse<NodoConsulta> resultadoParse = fromStringRec(consulta, null);

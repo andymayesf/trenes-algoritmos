@@ -44,9 +44,4 @@ public class NodoArbol{
     }
 
 
-    //@Override
-    //public int compareTo(NodoArbol<T> o) {
-      //  return o.getDato().compareTo(this.getDato());
-    //}
-
 }

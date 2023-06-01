@@ -11,9 +11,6 @@ public interface IGrafo {
     //Post: Agrega la arista origen-destino de peso "peso" en el grafo
     void agregarConexion(Conexion nuevaConexion);
     boolean existeEstacion(Estacion v);
-    boolean sonAdyacentes(Estacion origen, Estacion destino);
-    ILista verticesAdyacentes(String v);
-    boolean esVacio();
     boolean estaLlena();
 
     boolean existeConexion(Conexion nueva);
