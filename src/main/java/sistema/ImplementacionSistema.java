@@ -253,7 +253,20 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno viajeCostoMinimoEuros(String codigoEstacionOrigen, String codigoEstacionDestino) {
-        return null;
+        if(codigoEstacionOrigen == null || codigoEstacionOrigen == "" ||
+                codigoEstacionDestino==""|| codigoEstacionDestino == null)
+            return Retorno.error1("Los codigos no puedes ser vacios ni nulos");
+        Estacion origen = new Estacion(codigoEstacionOrigen);
+        Estacion destino = new Estacion(codigoEstacionDestino);
+        if(!origen.Validar() || !destino.Validar())
+            return Retorno.error2("Codigo no valido");
+        if(!grafoEstaciones.existeEstacion(origen))
+            return Retorno.error4("La estacion de origen no existe");
+        if(!grafoEstaciones.existeEstacion(destino))
+            return Retorno.error5("No existe estacion destino");
+        //TODO: verificar que existe un camino entre origen y destino
+        // error3
+        return grafoEstaciones.caminoMinEuros(origen, destino);
     }
 
 
