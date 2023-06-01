@@ -91,30 +91,6 @@ public class Lista<T extends Comparable> implements ILista<T> {
         return retorno;
     }
 
-    //TODO: herencia
-    @Override
-    public double getMenorDato(String tipo) {
-        Conexion c = new Conexion();
-        if(this.inicio.getDato().getClass() == c.getClass()) {
-            double ret = Integer.MAX_VALUE;
-            NodoLista aux = inicio;
-            while (aux != null) {
-                Conexion auxConexion = (Conexion) aux.getDato();
-                if(auxConexion.getEstado() != EstadoCamino.MALO){
-                    if(tipo == "distancia"){
-                        if(auxConexion.getDistancia() < ret) ret = auxConexion.getDistancia();
-                    }
-                    if(tipo == "costo"){
-                        if(auxConexion.getCosto() < ret) ret = auxConexion.getCosto();
-                    }
-                }
-                aux = aux.getSig();
-            }
-            return ret;
-        }
-        return 0;
-    }
-
 
     public void imprimirDatosV2(NodoLista<T> nodo ) {
         if (nodo!=null){

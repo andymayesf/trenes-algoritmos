@@ -11,5 +11,4 @@ public interface ILista<T> {
     boolean esLlena();
     String imprimirDatos();
 
-    double getMenorDato(String tipo);
 }

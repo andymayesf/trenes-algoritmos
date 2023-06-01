@@ -12,10 +12,10 @@ public class GrafoEstaciones implements IGrafo {
     private int maxEstaciones;
 
     private int cantEstaciones = 0;
-    private ILista<Conexion>[][] matrizConexiones;
+    private ListaConexion[][] matrizConexiones;
     public GrafoEstaciones(int maxEstaciones){
         this.maxEstaciones = maxEstaciones;
-        this.matrizConexiones = new ILista[maxEstaciones][maxEstaciones];
+        this.matrizConexiones = new ListaConexion[maxEstaciones][maxEstaciones];
         this.estaciones = new Estacion[maxEstaciones];
         inicializarMatriz();
     }
@@ -23,7 +23,7 @@ public class GrafoEstaciones implements IGrafo {
     private void inicializarMatriz(){
         for (int i = 0; i < maxEstaciones; i++) {
             for (int j = 0; j < maxEstaciones; j++) {
-                matrizConexiones[i][j] = new Lista<Conexion>();
+                matrizConexiones[i][j] = new ListaConexion();
             }
         }
     }
@@ -88,7 +88,7 @@ public class GrafoEstaciones implements IGrafo {
         int pos = obtenerPos(origen);
 
         for (int i = 0; i < maxEstaciones; i++) {
-            costos[i] = Integer.MAX_VALUE; //Seria nuestro infinito
+            costos[i] = Integer.MAX_VALUE;
         }
 
         costos[pos] = 0;
@@ -140,10 +140,9 @@ public class GrafoEstaciones implements IGrafo {
             return Retorno.ok((int) costos[posDestino],camino);
         return  Retorno.error3("No hay caminos posibles");
     }
-    //TODO: rever metodo
     private int obtenerSiguienteEstacionNoVisitadaDeMenorDistancia(double[] distancias, boolean[] visitados) {
         int posMin = -1;
-        double min = Integer.MAX_VALUE; // Infinito
+        double min = Integer.MAX_VALUE;
 
         for (int i = 0; i < maxEstaciones; i++) {
             if (!visitados[i] && distancias[i] < min) {
@@ -244,6 +243,4 @@ public class GrafoEstaciones implements IGrafo {
         }
         return -1;
     }
-
-
 }
