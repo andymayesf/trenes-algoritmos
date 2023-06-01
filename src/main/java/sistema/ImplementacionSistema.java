@@ -222,15 +222,17 @@ public class ImplementacionSistema implements Sistema {
 
         if (codigo == null || codigo == "") return Retorno.error2("El codigo debe ser distinto de nulo.");
 
-        Estacion nueva = new Estacion(codigo);
+        Estacion origen = new Estacion(codigo);
 
-        if(!nueva.Validar())
+        if(!origen.Validar())
             return Retorno.error3("El codigo de la estacion no es valido.");
 
-        if(!grafoEstaciones.existeEstacion(nueva))
+        if(!grafoEstaciones.existeEstacion(origen))
             return Retorno.error4("La estacion no esta ingresada en el sistema");
 
-        return grafoEstaciones.listarDestinosPorTrasbordos(nueva, cantidad);
+        Retorno ret = grafoEstaciones.listarDestinosPorTrasbordos(origen, cantidad);
+
+        return Retorno.ok(ret);
     }
 
     @Override

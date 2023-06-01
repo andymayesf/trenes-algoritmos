@@ -192,16 +192,6 @@ public class GrafoEstaciones implements IGrafo {
         return Retorno.ok(retorno.imprimirDatos());
     }
 
-    @Override
-    public Retorno caminoMinKm(Estacion origen, Estacion destino) {
-        return dijkstra(origen, destino, "distancia");
-    }
-    @Override
-    public Retorno caminoMinEuros(Estacion origen, Estacion destino) {
-        return dijkstra(origen, destino, "costo");
-    }
-
-
     private void listarDestinosPorTrasbordos(Lista<Estacion> retorno, Lista<Estacion> estaciones, int cantidad) {
         if(cantidad > 0) {
             NodoLista aux = estaciones.inicio;
@@ -212,6 +202,16 @@ public class GrafoEstaciones implements IGrafo {
             }
         }
     }
+    @Override
+    public Retorno caminoMinKm(Estacion origen, Estacion destino) {
+        return dijkstra(origen, destino, "distancia");
+    }
+
+    @Override
+    public Retorno caminoMinEuros(Estacion origen, Estacion destino) {
+        return dijkstra(origen, destino, "costo");
+    }
+
 
     public Lista<Estacion> verticesAdyacentes(Estacion estacion) {
         Lista<Estacion> estacionesAdy = new Lista();
@@ -245,5 +245,50 @@ public class GrafoEstaciones implements IGrafo {
         return -1;
     }
 
+    public void bfs(Estacion origen) {
+        int pos = obtenerPos(origen);
+        boolean[] visitados = new boolean[maxEstaciones];
+        Cola<Tupla> cola = new Cola<Tupla>();
 
+        visitados[pos] = true;
+        cola.encolar(new Tupla(pos, 0));
+
+        while (!cola.esVacia()) {
+            Tupla tuplaDesencolada = cola.desencolar();
+            System.out.println(estaciones[tuplaDesencolada.pos]);
+
+            for (int i = 0; i < maxEstaciones; i++) {
+                if (this.matrizConexiones[tuplaDesencolada.pos][i].isExiste() && !visitados[i]) {
+                    cola.encolar(new Tupla(i, tuplaDesencolada.salto + 1));
+                    visitados[i] = true;
+                }
+            }
+        }
+    }
+
+    private class Tupla {
+        private int pos;
+        private int salto;
+
+        public Tupla(int pos, int salto) {
+            this.pos = pos;
+            this.salto = salto;
+        }
+
+        public int getPos() {
+            return pos;
+        }
+
+        public void setPos(int pos) {
+            this.pos = pos;
+        }
+
+        public int getSalto() {
+            return salto;
+        }
+
+        public void setSalto(int salto) {
+            this.salto = salto;
+        }
+    }
 }
