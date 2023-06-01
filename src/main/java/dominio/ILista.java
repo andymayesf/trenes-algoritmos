@@ -3,7 +3,7 @@ package dominio;
 public interface ILista<T> {
     void insertar(T dato);
     void insertarOrdenado(T dato);
-    void borrar(T dato);
+    T borrar();
     int largo();
     boolean existe(T dato);
     T recuperar(T dato);
@@ -11,5 +11,4 @@ public interface ILista<T> {
     boolean esLlena();
     String imprimirDatos();
 
-    double getMenorDato(String tipo);
 }

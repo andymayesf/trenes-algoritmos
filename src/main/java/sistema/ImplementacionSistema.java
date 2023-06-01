@@ -107,6 +107,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok(pasajeros.listarDescendente());
     }
 
+    //7
     @Override
     public Retorno listarPasajerosPorNacionalidad(Nacionalidad nacionalidad) {
         if (nacionalidad == null)
@@ -133,6 +134,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok(ret);
     }
 
+    //8
     @Override
     public Retorno registrarEstacionDeTren(String codigo, String nombre) {
         if(grafoEstaciones.estaLlena())
@@ -149,6 +151,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok();
     }
 
+    //9
     @Override
     public Retorno registrarConexion(String codigoEstacionOrigen, String codigoEstacionDestino,
                                      int identificadorConexion, double costo, double tiempo, double kilometros,
@@ -181,6 +184,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok();
     }
 
+    //10
     @Override
     public Retorno actualizarCamino(String codigoEstacionOrigen, String codigoEstacionDestino,
                                     int identificadorConexion, double costo, double tiempo,
@@ -215,6 +219,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok();
     }
 
+    //11
     @Override
     public Retorno listadoEstacionesCantTrasbordos(String codigo, int cantidad) {
         if (cantidad < 0)
@@ -222,17 +227,18 @@ public class ImplementacionSistema implements Sistema {
 
         if (codigo == null || codigo == "") return Retorno.error2("El codigo debe ser distinto de nulo.");
 
-        Estacion nueva = new Estacion(codigo);
+        Estacion origen = new Estacion(codigo);
 
-        if(!nueva.Validar())
+        if(!origen.Validar())
             return Retorno.error3("El codigo de la estacion no es valido.");
 
-        if(!grafoEstaciones.existeEstacion(nueva))
+        if(!grafoEstaciones.existeEstacion(origen))
             return Retorno.error4("La estacion no esta ingresada en el sistema");
 
-        return grafoEstaciones.listarDestinosPorTrasbordos(nueva, cantidad);
+        return grafoEstaciones.listarDestinosPorTrasbordos(origen, cantidad);
     }
 
+    //12
     @Override
     public Retorno viajeCostoMinimoKilometros(String codigoEstacionOrigen, String codigoEstacionDestino) {
         if(codigoEstacionOrigen == null || codigoEstacionOrigen == "" ||
@@ -246,11 +252,10 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error4("La estacion de origen no existe");
         if(!grafoEstaciones.existeEstacion(destino))
             return Retorno.error5("No existe estacion destino");
-        //TODO: verificar que existe un camino entre origen y destino
-        // error3
         return grafoEstaciones.caminoMinKm(origen, destino);
     }
 
+    //13
     @Override
     public Retorno viajeCostoMinimoEuros(String codigoEstacionOrigen, String codigoEstacionDestino) {
         if(codigoEstacionOrigen == null || codigoEstacionOrigen == "" ||
@@ -264,8 +269,8 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error4("La estacion de origen no existe");
         if(!grafoEstaciones.existeEstacion(destino))
             return Retorno.error5("No existe estacion destino");
-        //TODO: verificar que existe un camino entre origen y destino
-        // error3
+
+        //OK y error3 los retorna el metodo
         return grafoEstaciones.caminoMinEuros(origen, destino);
     }
 
